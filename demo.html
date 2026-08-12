@@ -24,7 +24,9 @@
     padding:22px 14px 40px;
     -webkit-user-select:none;user-select:none;
   }
-  .rack{max-width:1120px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  .rack{width:1120px;max-width:100%;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+  /* on desktop the whole rack scales to fit the window, like a plugin UI */
+  @media (min-width:900px){ body{overflow:hidden;padding:10px} }
 
   /* ---------- header ---------- */
   header{
@@ -973,6 +975,19 @@ demoBtn.onclick=()=>{
     },30);
   }else{clearInterval(demo.timer);allNotesOff();}
 };
+
+/* ============================== fit to window ============================== */
+function fitRack(){
+  const rack=document.querySelector(".rack");
+  if(innerWidth<900){rack.style.transform="";return;}
+  rack.style.transform="none";
+  const s=Math.min(1,(innerWidth-24)/rack.offsetWidth,(innerHeight-24)/rack.offsetHeight);
+  rack.style.transformOrigin="top center";
+  rack.style.transform=`scale(${s.toFixed(4)})`;
+}
+addEventListener("resize",fitRack);
+addEventListener("load",fitRack);
+fitRack();
 
 /* ============================== scope ============================== */
 const scope=document.getElementById("scope"),sctx=scope.getContext("2d");
