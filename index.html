@@ -72,6 +72,9 @@
     border:1px solid var(--line);outline:1px solid var(--edge);
     box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 90px rgba(255,171,46,.07);
   }
+  /* wide breakout for the hero shot and video — extends past the text column */
+  .breakout{max-width:1142px;margin:0 auto;padding:0 22px}
+  .breakout .frame{max-width:1097px}   /* exactly half the 2195px render = 1:2 retina mapping */
   /* the hero shot is a 2x render of the 878px-wide plugin: cap it at native
      size so it maps 1:1 onto retina pixels instead of being resampled */
   .hero .frame{max-width:878px}
@@ -142,20 +145,25 @@
   </div>
   <div class="meta">v1.0.0-beta &nbsp;&middot;&nbsp; FL Studio / Ableton / Logic / any VST3&nbsp;or&nbsp;AU host</div>
 
-  <div class="frame"><img src="img/shot-trap808.png" width="1756" height="1420"
+</header>
+
+<div class="breakout">
+  <div class="frame"><img src="img/shot-trap808.png" width="2195" height="1775"
        alt="The Ember-8 plugin interface with the Trap 808 preset loaded"></div>
   <div class="caption">THE PLUGIN &mdash; TRAP 808 LOADED, RENDERED FROM THE REAL UI</div>
-</header>
+</div>
 
 <section class="wrap">
   <div class="eyebrow">In motion</div>
   <h2>Hear it think</h2>
   <p class="sec-lede">The built-in demo riff cycling through presets &mdash; captured from the free
      browser version, which runs the same architecture as the plugin.</p>
-  <div class="frame">
-    <video src="video/ember8-demo.webm" autoplay muted loop playsinline></video>
+  <div class="breakout" style="padding:0">
+    <div class="frame">
+      <video src="video/ember8-demo.webm" autoplay muted loop playsinline></video>
+    </div>
+    <div class="caption">BROWSER DEMO &middot; DEMO RIFF &middot; PRESET SWITCHING LIVE</div>
   </div>
-  <div class="caption">BROWSER DEMO &middot; DEMO RIFF &middot; PRESET SWITCHING LIVE</div>
 </section>
 
 <section class="wrap" id="inside">
