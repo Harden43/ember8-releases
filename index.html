@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember-8</title>
+<meta name="description" content="Ember-8 — a subtractive polysynth built for beatmakers. Free beta for macOS and Windows, playable in your browser.">
+<style>
+  :root{
+    --bg:#0d0f13; --panel-hi:#22262f; --panel-lo:#191c23; --well:#111318;
+    --line:#05060a; --etch:rgba(255,255,255,.055);
+    --ink:#d6d9e0; --dim:#878e9e; --faint:#5a6070;
+    --amber:#ffab2e; --amber-soft:rgba(255,171,46,.28); --ivory:#ece8dc;
+    --disp:"Futura","Avenir Next","Century Gothic","Trebuchet MS",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg)}
+  body{color:var(--ink);font-family:var(--disp);line-height:1.55}
+  a{color:var(--amber);text-decoration:none}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+
+  /* hero */
+  header{padding:72px 0 40px;text-align:center}
+  .logo{font-size:clamp(44px,9vw,76px);font-weight:700;letter-spacing:.04em;color:var(--ivory)}
+  .logo em{font-style:normal;color:var(--amber)}
+  .tag{margin-top:10px;font-size:15px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase}
+  #scope{display:block;margin:34px auto 0;width:min(640px,92vw);height:70px;
+    background:#07090d;border:1px solid var(--line);border-radius:6px;
+    box-shadow:inset 0 2px 10px rgba(0,0,0,.7)}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .btn{
+    display:inline-block;font-family:var(--disp);font-size:13px;letter-spacing:.12em;
+    padding:14px 22px;border-radius:6px;border:1px solid var(--line);
+    background:linear-gradient(#2c313c,#1e222a);color:var(--ink);
+    box-shadow:inset 0 1px 0 var(--etch),0 3px 8px rgba(0,0,0,.45);
+  }
+  .btn:hover{color:var(--ivory)}
+  .btn.hot{background:linear-gradient(#ffc25e,#f09a12);color:#181000;border-color:#7a4c00;
+    box-shadow:0 0 20px var(--amber-soft),inset 0 1px 0 rgba(255,255,255,.4);font-weight:600}
+  .btn small{display:block;font-size:10px;letter-spacing:.08em;opacity:.75;margin-top:3px}
+  .sub{margin-top:14px;font-size:12px;color:var(--faint)}
+
+  /* sections */
+  section{padding:44px 0}
+  h2{font-size:12px;font-weight:600;letter-spacing:.28em;color:var(--dim);
+     text-transform:uppercase;margin-bottom:24px;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:7px;height:7px;border-radius:50%;
+     background:var(--amber);box-shadow:0 0 8px var(--amber)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .card{
+    background:linear-gradient(var(--panel-hi),var(--panel-lo));
+    border:1px solid var(--line);border-radius:8px;padding:18px;
+    box-shadow:inset 0 1px 0 var(--etch),0 6px 18px rgba(0,0,0,.4);
+  }
+  .card b{display:block;color:var(--ivory);font-size:14px;letter-spacing:.04em;margin-bottom:6px}
+  .card p{font-size:13px;color:var(--dim)}
+  .card .m{font-family:var(--mono);color:var(--amber);font-size:12px}
+
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
+  .steps .card ol{padding-left:18px;font-size:13px;color:var(--dim)}
+  .steps .card li{margin:6px 0}
+  .note{
+    margin-top:20px;padding:14px 18px;border-radius:8px;font-size:13px;color:var(--dim);
+    background:var(--well);border:1px solid var(--line);
+  }
+  .note b{color:var(--amber)}
+
+  footer{padding:40px 0 60px;text-align:center;font-size:11px;letter-spacing:.12em;color:var(--faint)}
+  footer a{color:var(--dim)}
+  @media (prefers-reduced-motion: reduce){ #scope{display:none} }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <div class="logo">EMBER<em>-8</em></div>
+  <div class="tag">Subtractive polysynth &middot; built for beatmakers</div>
+  <canvas id="scope" width="1280" height="140"></canvas>
+  <div class="cta">
+    <a class="btn hot" href="demo.html">&#9654;&nbsp; PLAY IT IN YOUR BROWSER<small>no install &middot; works on any laptop</small></a>
+    <a class="btn" href="https://github.com/Harden43/ember8-releases/releases/latest/download/Ember-8-macOS.pkg">&#8595;&nbsp; DOWNLOAD FOR MACOS<small>VST3 + AU + standalone &middot; .pkg</small></a>
+    <a class="btn" href="https://github.com/Harden43/ember8-releases/releases/latest/download/Ember-8-Windows.zip">&#8595;&nbsp; DOWNLOAD FOR WINDOWS<small>VST3 + standalone &middot; .zip</small></a>
+  </div>
+  <div class="sub">v1.0.0-beta &middot; free during beta &middot; FL Studio, Ableton, Logic &amp; any VST3/AU host</div>
+</header>
+
+<section class="wrap">
+  <h2>What's inside</h2>
+  <div class="grid">
+    <div class="card"><b>Alias-free wavetable engine</b>
+      <p>Mipmapped, band-limited oscillators. Measured aliasing <span class="m">below &minus;116&nbsp;dB</span> at every pitch &mdash; clean where cheap synths get harsh.</p></div>
+    <div class="card"><b>808s that knock</b>
+      <p>Dedicated pitch envelope, mono glide for real 808 slides, and a 4&times;-oversampled drive stage for saturation without digital grit.</p></div>
+    <div class="card"><b>Moog-style ladder filter</b>
+      <p>24 dB/oct analog-modeled lowpass with musical resonance, its own ADSR, and key-ready envelope amounts.</p></div>
+    <div class="card"><b>16-voice stereo unison</b>
+      <p>Detuned saw stacks spread across the field &mdash; supersaws, reeses, and anthem leads out of the box.</p></div>
+    <div class="card"><b>Deep modulation</b>
+      <p>Two LFOs (pitch / filter / amp) plus a 4-slot mod matrix: route velocity, envelopes, or LFOs anywhere.</p></div>
+    <div class="card"><b>Import your own wavetables</b>
+      <p>Load any single-cycle WAV into OSC 1 &mdash; it's automatically band-limited so it stays clean at every note.</p></div>
+    <div class="card"><b>61 presets, hip-hop first</b>
+      <p>Trap 808, Drill Flute, Plugg Keys, G-Funk Whistle, Boom Bap Keys, wobbles, pads, bells &mdash; organized by category.</p></div>
+    <div class="card"><b>Plays like an instrument</b>
+      <p>Velocity-sensitive, MIDI Learn on every knob, full host automation with readable values, presets savable from the GUI.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Install</h2>
+  <div class="steps">
+    <div class="card"><b>macOS</b>
+      <ol>
+        <li>Download and open the <span class="m">.pkg</span>. It installs the VST3, AU, and standalone app.</li>
+        <li>Beta builds are unsigned: if macOS blocks it, right-click the .pkg &rarr; <b>Open</b>, or allow it under System Settings &rarr; Privacy &amp; Security.</li>
+        <li>Rescan plugins in your DAW &mdash; Ember-8 appears under Generators / Instruments.</li>
+      </ol></div>
+    <div class="card"><b>Windows</b>
+      <ol>
+        <li>Unzip, then copy the <span class="m">Ember-8.vst3</span> folder to <span class="m">C:\Program Files\Common Files\VST3</span>.</li>
+        <li>If SmartScreen appears on the standalone app: <b>More info &rarr; Run anyway</b> (beta builds are unsigned).</li>
+        <li>Rescan plugins in FL Studio (Options &rarr; Manage plugins &rarr; Find plugins).</li>
+      </ol></div>
+  </div>
+  <div class="note"><b>Beta.</b> Ember-8 is in open beta &mdash; it's free, and feedback shapes v1.1.
+    Found a bug or want a sound added? <a href="https://github.com/Harden43/ember8-releases/issues">Open an issue</a>.</div>
+</section>
+
+<footer>
+  EMBER-8 &middot; v1.0.0-beta &middot; &copy; 2026 &middot; all synthesis, no samples
+</footer>
+
+<script>
+// ambient scope animation in the hero — a slowly-detuning supersaw shape
+const c=document.getElementById("scope"),x=c.getContext("2d");
+let t=0;
+(function draw(){
+  requestAnimationFrame(draw);
+  t+=0.012;
+  const w=c.width,h=c.height;
+  x.fillStyle="#07090d";x.fillRect(0,0,w,h);
+  x.strokeStyle="rgba(255,171,46,.12)";x.lineWidth=1;
+  x.beginPath();x.moveTo(0,h/2);x.lineTo(w,h/2);x.stroke();
+  x.strokeStyle="#ffab2e";x.lineWidth=2.5;
+  x.shadowColor="rgba(255,171,46,.6)";x.shadowBlur=10;
+  x.beginPath();
+  for(let i=0;i<=w;i+=3){
+    const ph=i/w*6.283*2;
+    let v=0;
+    for(let k=0;k<5;k++) v+=((ph*(1+k*.004)+t*(1+k*.3))%6.283)/6.283*2-1;
+    x.lineTo(i,h/2+v/5*h*.36);
+  }
+  x.stroke();x.shadowBlur=0;
+})();
+</script>
+</body>
+</html>
