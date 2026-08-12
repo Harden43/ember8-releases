@@ -72,6 +72,9 @@
     border:1px solid var(--line);outline:1px solid var(--edge);
     box-shadow:0 30px 80px rgba(0,0,0,.55), 0 0 90px rgba(255,171,46,.07);
   }
+  /* the hero shot is a 2x render of the 878px-wide plugin: cap it at native
+     size so it maps 1:1 onto retina pixels instead of being resampled */
+  .hero .frame{max-width:878px}
   .caption{margin-top:12px;font-family:var(--mono);font-size:11px;color:var(--faint);
            text-align:center;letter-spacing:.06em}
 
@@ -189,14 +192,14 @@
 
   <div class="duo">
     <div>
-      <div class="frame"><img src="img/shot-supersaw.png" width="1756" height="1420"
-           alt="Ember-8 with the Supersaw Lead preset"></div>
-      <div class="caption">SUPERSAW LEAD &middot; 7-VOICE UNISON</div>
+      <div class="frame"><img src="img/crop-hypersaw.png" width="982" height="560"
+           alt="Ember-8 oscillator section with the Hyper Saw preset: 16-voice unison, full spread"></div>
+      <div class="caption">HYPER SAW &middot; 16-VOICE UNISON, FULL SPREAD</div>
     </div>
     <div>
-      <div class="frame"><img src="img/shot-warmpad.png" width="1756" height="1420"
-           alt="Ember-8 with the Warm Pad preset"></div>
-      <div class="caption">WARM PAD &middot; LFO ON THE FILTER</div>
+      <div class="frame"><img src="img/crop-warmpad.png" width="982" height="560"
+           alt="Ember-8 filter and envelope section with the Warm Pad preset"></div>
+      <div class="caption">WARM PAD &middot; FILTER &amp; ENVELOPES</div>
     </div>
   </div>
 </section>
